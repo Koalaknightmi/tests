@@ -1,6 +1,6 @@
-const { expect } = require('@playwright/test')
-const { chatUrl } = require('../static/globalVariables')
-const { joinChatTestMessage } = require('../static/testValues')
+import { chatUrl } from "../../../static/globalVariables"
+import { joinChatTestMessage } from "../../../static/testValues"
+import { expect } from "@playwright/test"
 
 exports.chatTestPage = class chatTestPage {
   /**
@@ -24,13 +24,13 @@ exports.chatTestPage = class chatTestPage {
     await expect(this.page).toHaveScreenshot({ maxDiffPixels: 0 })
   }
 
-  async sendNormalMessage (message) {
+  async sendNormalMessage (message) { // TODO https://app.clickup.com/t/3u1b0m8
     await this.input_messageBox.fill(message)
     await this.button_submit.click()
     await expect(this.messages_last).toContainText(message, { timeout: 6000 })
   }
 
-  async sendMessageWithLink (message) {
+  async sendMessageWithLink (message) { // TODO https://app.clickup.com/t/3u1b12m
     await this.input_messageBox.fill(message)
     await this.button_submit.click()
     await expect(this.messages_last.textContent).toContain(message, { timeout: 6000 })
@@ -39,11 +39,12 @@ exports.chatTestPage = class chatTestPage {
     await expect(this.page).toHaveURL(link.getAttribute('url'))
   }
 
-  async createChat (chat) {
+  async createChat (chatID) { // TODO https://app.clickup.com/t/3u1b19f
     this.button_createChat.click()
+    // TODO creation settings and verification
   }
 
-  async joinChat (chatID) {
+  async joinChat (chatID) { // TODO https://app.clickup.com/t/3u1b19f
     const chat = this.page.locator('_react=chat[key=' + chatID + ']')
     await chat.click()
     await expect(this.page).toHaveURL(chatUrl + '/' + chat.getAttribute('key'))
@@ -53,5 +54,9 @@ exports.chatTestPage = class chatTestPage {
 
   async verifyPagePickedChat () {
     await expect(this.chatName.innerText).not.toBe('', { timeout: 1000 })
+  }
+
+  async deleteChat (chatID) { // TODO https://app.clickup.com/t/3u1b19f
+    // TODO deletion test and deletion verification verification
   }
 }

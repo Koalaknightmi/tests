@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test')
-const { loginUrl } = require("../static/globalVariables")
+import { expect } from "@playwright/test"
+import {loginUrl} from "../../../static/globalVariables"
 
 exports.loginTestPage = class LoginTestPage {
   /**
@@ -16,7 +16,7 @@ exports.loginTestPage = class LoginTestPage {
   }
 
   async goto () {
-    await this.page.goto('http://localhost:3000/login', { timeout: 30000 })
+    await this.page.goto(loginUrl, { timeout: 30000 })
   }
 
   async signInWithEmail (email, password) {
